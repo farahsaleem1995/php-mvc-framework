@@ -9,20 +9,27 @@ namespace App\Core;
  */
 class Application
 {
+    public static string $rootPath;
     public Router $router;
     public Request $request;
+    public Response $response;
 
     /**
      * Application constructor.
+     *
+     * @param string $rootPath
      */
-    public function __construct()
+    public function __construct(string $rootPath)
     {
+        self::$rootPath = $rootPath;
+
         $this->request = new Request();
-        $this->router = new Router($this->request);
+        $this->response = new Response();
+        $this->router = new Router($this->request, $this->response);
     }
 
     public function run()
     {
-        $this->router->resolve();
+        echo $this->router->resolve();
     }
 }
